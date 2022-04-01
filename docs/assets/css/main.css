@@ -8197,6 +8197,7 @@ input, select, textarea {
 			-ms-flex-shrink: 0;
 			flex-shrink: 0;
 			width: 15rem;
+			height: 0px;
 		}
 
 		.index > * > .content {
@@ -8208,6 +8209,7 @@ input, select, textarea {
 			-webkit-flex-shrink: 1;
 			-ms-flex-shrink: 1;
 			flex-shrink: 1;
+			height: 0px;
 		}
 
 	.index > :first-child {
