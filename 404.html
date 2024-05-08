@@ -1,5 +1,5 @@
 ---
 layout: redirected
 sitemap: false
-redirect_to: https://hrjp.notion.site
+redirect_to: https://hrjp.super.site/
 ---
