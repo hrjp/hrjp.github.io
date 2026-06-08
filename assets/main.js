@@ -3,6 +3,23 @@ const meter = document.querySelector(".scroll-meter");
 const navLinks = [...document.querySelectorAll(".nav a")];
 const LANG_KEY = "hrjp-language";
 const scrollRobot = document.createElement("div");
+const walkingRobot = document.createElement("div");
+
+walkingRobot.className = "walking-robot";
+walkingRobot.setAttribute("aria-hidden", "true");
+walkingRobot.innerHTML = `
+  <div class="walking-robot-shadow"></div>
+  <div class="walking-robot-head">
+    <span class="walking-robot-eye"></span>
+  </div>
+  <div class="walking-robot-torso">
+    <span class="walking-robot-core"></span>
+    <span class="walking-robot-arm walk-arm-front"></span>
+    <span class="walking-robot-arm walk-arm-back"></span>
+  </div>
+  <span class="walking-robot-leg walk-leg-front"></span>
+  <span class="walking-robot-leg walk-leg-back"></span>
+`;
 
 scrollRobot.className = "scroll-robot";
 scrollRobot.setAttribute("aria-hidden", "true");
@@ -17,7 +34,7 @@ scrollRobot.innerHTML = `
   <span class="scroll-robot-wheel wheel-front"></span>
   <span class="scroll-robot-wheel wheel-back"></span>
 `;
-document.body.prepend(scrollRobot);
+document.body.prepend(walkingRobot, scrollRobot);
 
 const UI_TEXT = {
   ja: {
@@ -40,7 +57,12 @@ const UI_TEXT = {
       { company: "Panasonic Advanced Technology Development Co.,Ltd.", body: "自律移動ロボットの開発" }
     ],
     publicationHeading: "研究発表・受賞",
-    filters: ["すべて", "Journal", "Conference", "Awards"],
+    filters: ["すべて", "査読あり", "査読無し", "受賞"],
+    pubKinds: {
+      peer: "査読あり",
+      nonpeer: "査読無し",
+      award: "受賞"
+    },
     backTop: "上へ戻る",
     project: {
       back: "← Creation",
@@ -74,7 +96,12 @@ const UI_TEXT = {
       { company: "Panasonic Advanced Technology Development Co.,Ltd.", body: "Development of autonomous mobile robots" }
     ],
     publicationHeading: "Research outputs and awards",
-    filters: ["All", "Journal", "Conference", "Awards"],
+    filters: ["All", "Peer reviewed", "Non-peer reviewed", "Awards"],
+    pubKinds: {
+      peer: "Peer reviewed",
+      nonpeer: "Non-peer reviewed",
+      award: "Awards"
+    },
     backTop: "Back to top",
     project: {
       back: "← Creation",
@@ -122,7 +149,6 @@ function renderProjectCards(lang) {
     return `
       <a class="project-card reveal is-visible" href="${project.path}" aria-label="${projectText.title}">
         <img src="${project.image}" alt="${projectText.title}">
-        <span class="project-tag">${projectText.tag}</span>
         <h3>${projectText.title}</h3>
       </a>
     `;
@@ -196,6 +222,11 @@ function updateHomePage(lang) {
 
   document.querySelectorAll(".filter").forEach((button, index) => {
     if (text.filters[index]) button.textContent = text.filters[index];
+  });
+
+  document.querySelectorAll(".pub-item").forEach((item) => {
+    const label = item.querySelector(".pub-kind");
+    if (label && text.pubKinds[item.dataset.kind]) label.textContent = text.pubKinds[item.dataset.kind];
   });
 
   renderProjectCards(lang);
@@ -315,10 +346,13 @@ function updateScrollState() {
   const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
   const robotX = 112 - Math.min(progress, 1) * 142;
   const robotY = Math.sin(progress * Math.PI * 8) * 4;
+  const walkingRobotX = 132 - Math.min(progress, 1) * 142;
+  const walkingRobotY = Math.sin(progress * Math.PI * 9 + 0.8) * 5;
 
   if (meter) meter.style.width = `${Math.min(progress * 100, 100)}%`;
   if (header) header.classList.toggle("is-scrolled", window.scrollY > 12);
   if (scrollRobot) scrollRobot.style.transform = `translate3d(${robotX}vw, ${robotY}px, 0)`;
+  if (walkingRobot) walkingRobot.style.transform = `translate3d(${walkingRobotX}vw, ${walkingRobotY}px, 0)`;
 }
 
 installLanguageToggle();
