@@ -3,10 +3,12 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const contentDir = path.join(root, "content", "projects");
+const publicationsFile = path.join(root, "content", "publications.yml");
 const creationDir = path.join(root, "creation");
 const dataFile = path.join(root, "assets", "project-data.js");
+const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "lighter-type-2";
+const assetVersion = "publications-yaml-1";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -154,10 +156,38 @@ function normalizeProject(project, filename) {
   };
 }
 
+function normalizePublication(publication, filename) {
+  const required = ["id", "kind", "title", "url"];
+  required.forEach((key) => {
+    if (!publication[key]) throw new Error(`${filename}: missing "${key}"`);
+  });
+
+  if (!["peer", "nonpeer", "award"].includes(publication.kind)) {
+    throw new Error(`${filename}: unknown publication kind "${publication.kind}"`);
+  }
+
+  return {
+    id: publication.id,
+    kind: publication.kind,
+    title: publication.title,
+    url: publication.url,
+    authors: ensureArray(publication.authors).map((author) => ({
+      name: author.name,
+      highlight: author.highlight === true
+    })),
+    venue: publication.venue || ""
+  };
+}
+
 function writeProjectData(projects) {
   const publicProjects = projects.map(({ legacyPaths, slug, ...project }) => project);
   const js = `window.HRJP_PROJECTS = ${JSON.stringify(publicProjects, null, 2)};\n`;
   fs.writeFileSync(dataFile, js);
+}
+
+function writePublicationData(publications) {
+  const js = `window.HRJP_PUBLICATIONS = ${JSON.stringify(publications, null, 2)};\n`;
+  fs.writeFileSync(publicationDataFile, js);
 }
 
 function writeProjectPages(projects) {
@@ -226,12 +256,18 @@ function main() {
     const raw = fs.readFileSync(path.join(contentDir, file), "utf8");
     return normalizeProject(parseYaml(raw), file);
   });
+  const publications = normalizePublicationList(parseYaml(fs.readFileSync(publicationsFile, "utf8")), "content/publications.yml");
 
   writeProjectData(projects);
+  writePublicationData(publications);
   writeProjectPages(projects);
   writeNotFound(projects);
   syncAssetVersions();
-  console.log(`Built ${projects.length} projects.`);
+  console.log(`Built ${projects.length} projects and ${publications.length} publications.`);
+}
+
+function normalizePublicationList(value, filename) {
+  return ensureArray(value).map((publication) => normalizePublication(publication, filename));
 }
 
 main();

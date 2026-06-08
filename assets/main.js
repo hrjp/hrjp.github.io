@@ -139,6 +139,49 @@ function setText(selector, value, root = document) {
   if (element) element.textContent = value;
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function renderAuthors(authors) {
+  return authors.map((author) => {
+    const name = escapeHtml(author.name);
+    return author.highlight ? `<strong>${name}</strong>` : name;
+  }).join(", ");
+}
+
+function getActivePublicationFilter() {
+  return document.querySelector(".filter.is-active")?.dataset.filter || "all";
+}
+
+function renderPublicationList(lang) {
+  const list = document.querySelector("[data-publication-list]");
+  const publications = window.HRJP_PUBLICATIONS || [];
+  if (!list) return;
+
+  const text = UI_TEXT[lang];
+  const activeFilter = getActivePublicationFilter();
+
+  list.innerHTML = publications.map((publication) => {
+    const label = text.pubKinds[publication.kind] || publication.kind;
+    const authors = renderAuthors(publication.authors || []);
+    const citation = [authors, escapeHtml(publication.venue)].filter(Boolean).join(". ");
+    const isVisible = activeFilter === "all" || publication.kind === activeFilter;
+
+    return `
+      <article class="pub-item reveal is-visible${isVisible ? "" : " is-hidden"}" data-kind="${publication.kind}">
+        <span class="pub-kind">${label}</span>
+        <h3><a href="${escapeHtml(publication.url)}">${escapeHtml(publication.title)}</a></h3>
+        ${citation ? `<p>${citation}</p>` : ""}
+      </article>
+    `;
+  }).join("");
+}
+
 function renderProjectCards(lang) {
   const grid = document.querySelector("[data-project-grid]");
   const projects = window.HRJP_PROJECTS || [];
@@ -224,12 +267,8 @@ function updateHomePage(lang) {
     if (text.filters[index]) button.textContent = text.filters[index];
   });
 
-  document.querySelectorAll(".pub-item").forEach((item) => {
-    const label = item.querySelector(".pub-kind");
-    if (label && text.pubKinds[item.dataset.kind]) label.textContent = text.pubKinds[item.dataset.kind];
-  });
-
   renderProjectCards(lang);
+  renderPublicationList(lang);
 }
 
 function renderProjectPage(lang) {
