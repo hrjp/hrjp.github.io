@@ -21,9 +21,8 @@ document.body.prepend(scrollRobot);
 
 const UI_TEXT = {
   ja: {
-    description: "リアルワールドで動くロボットを作ってます.",
+    description: "Shunya Hara portfolio",
     nav: ["Creation", "Biography", "Publication", "Contact"],
-    heroLead: "リアルワールドで動くロボットを作ってます.",
     viewCreation: "Creationを見る",
     publicationsButton: "Publicationを見る",
     metricLabels: ["制作プロジェクト", "研究発表・受賞", "ポートフォリオ"],
@@ -50,16 +49,14 @@ const UI_TEXT = {
       resources: "関連リンク",
       noLinks: "公開リンクはまだありません。",
       media: "動画",
-      mediaHeading: "動画と動作の記録",
       noVideo: "動画は未掲載です。",
       next: "次に見る",
       nextHeading: "他のCreation"
     }
   },
   en: {
-    description: "I build robots that move in the real world.",
+    description: "Shunya Hara portfolio",
     nav: ["Creation", "Biography", "Publication", "Contact"],
-    heroLead: "I build robots that move in the real world.",
     viewCreation: "View Creation",
     publicationsButton: "Publication",
     metricLabels: ["Creation projects", "Research outputs", "Portfolio archive"],
@@ -86,7 +83,6 @@ const UI_TEXT = {
       resources: "Resources",
       noLinks: "No public links yet.",
       media: "Media",
-      mediaHeading: "Videos and motion records",
       noVideo: "No video is listed yet.",
       next: "Next",
       nextHeading: "More Creation projects"
@@ -173,7 +169,6 @@ function updateHomePage(lang) {
     if (text.nav[index]) link.textContent = text.nav[index];
   });
 
-  setText(".hero .lead", text.heroLead);
   setText(".hero-actions .primary", text.viewCreation);
   setText(".hero-actions .ghost", text.publicationsButton);
 
@@ -284,7 +279,6 @@ function renderProjectPage(lang) {
     <section class="project-media">
       <div class="section-heading reveal is-visible">
         <p class="eyebrow">${text.media}</p>
-        <h2>${text.mediaHeading}</h2>
       </div>
       <div class="video-grid">${videoMarkup}</div>
     </section>

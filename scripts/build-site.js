@@ -6,7 +6,7 @@ const contentDir = path.join(root, "content", "projects");
 const creationDir = path.join(root, "creation");
 const dataFile = path.join(root, "assets", "project-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "scroll-robot-1";
+const assetVersion = "remove-copy-1";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
