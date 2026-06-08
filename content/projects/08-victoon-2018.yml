@@ -1,0 +1,31 @@
+id: victoon-2018
+slug: victoon-2018
+title: 高専ロボコン2018 VICT(OO)N
+tag: Robocon
+year: 2018
+image: /assets/projects/victoon-2018.jpg
+summary: 高専ロボコン2018で近畿地区大会優勝、全国大会特別賞を受賞したペットボトルを投げるロボット。
+legacyPaths:
+  - /高専ロボコン2018-victoon/
+highlights:
+  - 近畿地区大会優勝
+  - 全国大会特別賞
+  - バネの力でペットボトルを投射
+links: []
+videos:
+  - label: 競技動画
+    url: https://www.youtube.com/embed/lEAJkTNWfJU?rel=0
+  - label: PV
+    url: https://www.youtube.com/embed/rKM8hVcX9Dw?rel=0
+en:
+  title: Kosen Robocon 2018 VICT(OO)N
+  summary: A bottle-throwing robot that won the Kansai regional tournament and a special award at the national tournament.
+  highlights:
+    - Winner of the Kansai regional tournament
+    - Special award at the national tournament
+    - Spring-powered bottle throwing mechanism
+  videos:
+    - label: Competition video
+      url: https://www.youtube.com/embed/lEAJkTNWfJU?rel=0
+    - label: Promotion video
+      url: https://www.youtube.com/embed/rKM8hVcX9Dw?rel=0

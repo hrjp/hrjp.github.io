@@ -1,0 +1,33 @@
+id: easys-underwater-robot-2024
+slug: easys-underwater-robot-2024
+title: Easys 水中ロボット 2024
+tag: Underwater Robot
+year: 2024
+image: /assets/projects/easys-underwater-robot-2024.jpg
+summary: オープンソースの水中ロボット。ROSパッケージとシミュレータを整備。
+legacyPaths:
+  - /creation/easys-水中ロボット-2024/
+highlights:
+  - 水中ロボットのオープンソース開発
+  - ROSパッケージ
+  - シミュレーション環境
+links:
+  - label: Easys_ros
+    url: https://github.com/tamago117/Easys_ros
+    meta: GitHub
+  - label: Easys_sim
+    url: https://github.com/hrjp/Easys_sim
+    meta: GitHub
+videos:
+  - label: デモ動画
+    url: https://www.youtube.com/embed/4HA7E2-nBuU?rel=0
+en:
+  title: Easys Underwater Robot 2024
+  summary: An open-source underwater robot project with ROS packages and a simulator.
+  highlights:
+    - Open-source underwater robot development
+    - ROS package development
+    - Simulation environment
+  videos:
+    - label: Demo video
+      url: https://www.youtube.com/embed/4HA7E2-nBuU?rel=0

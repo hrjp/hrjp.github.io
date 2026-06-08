@@ -1,0 +1,30 @@
+id: autonomous-ai-challenge-2024
+slug: autonomous-ai-challenge-2024
+title: 自動運転AIチャレンジ2024
+tag: Autonomous Driving
+year: 2024
+image: /assets/projects/autonomous-ai-challenge-2024.png
+summary: EVカートで自動運転を行い、サーキット周回タイムを競うチャレンジ。3位入賞。
+legacyPaths:
+  - /creation/自動運転aiチャレンジ2024/
+highlights:
+  - EVカートの実車自動運転
+  - サーキット周回タイム競技
+  - 決勝大会で3位入賞
+links:
+  - label: aichallenge-2024
+    url: https://github.com/booars/aichallenge-2024
+    meta: GitHub
+videos:
+  - label: 決勝大会の走行動画
+    url: https://www.youtube.com/embed/_wxX7OjICFk?rel=0&start=23691
+en:
+  title: Autonomous Driving AI Challenge 2024
+  summary: An autonomous EV kart challenge competing for lap time on a circuit. Finished in 3rd place.
+  highlights:
+    - Real-vehicle autonomous driving with an EV kart
+    - Circuit lap-time competition
+    - 3rd place in the final round
+  videos:
+    - label: Final round run
+      url: https://www.youtube.com/embed/_wxX7OjICFk?rel=0&start=23691
