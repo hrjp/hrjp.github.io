@@ -6,7 +6,7 @@ window.HRJP_MEDIA = [
     "title": "GNSSを利用した自律移動ロボット・プログラミング",
     "outlet": "Interface 2026年6月号",
     "url": "https://interface.cqpub.co.jp/wp-content/uploads/if2606_094.pdf",
-    "description": "自律移動ロボットの自己位置推定・経路追従制御について解説した記事が掲載されました。",
+    "description": "GNSSを利用した自律移動ロボットの自己位置推定・経路追従制御について解説した記事が掲載されました。",
     "en": {
       "kind": "Magazine",
       "title": "GNSS-Based Autonomous Mobile Robot Programming",

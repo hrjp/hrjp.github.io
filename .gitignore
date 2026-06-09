@@ -27,8 +27,13 @@ pnpm-debug.log*
 .sass-cache/
 
 # Test/build artifacts
+_site/
 coverage/
 .nyc_output/
+
+# Jekyll
+.jekyll-cache/
+.jekyll-metadata
 
 # Local editor state
 .idea/
