@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - codex/new-hp
   workflow_dispatch:
 
 permissions:
@@ -31,12 +32,35 @@ jobs:
       - name: Build generated content
         run: npm run build
 
+      - name: Verify generated content
+        run: |
+          test -s assets/project-data.js
+          test -s assets/publication-data.js
+          test -s assets/media-data.js
+          test -s creation/navitoon/index.html
+          test -s 404.html
+          grep -q "HRJP_PROJECTS" assets/project-data.js
+          grep -q "HRJP_PUBLICATIONS" assets/publication-data.js
+          grep -q "HRJP_MEDIA" assets/media-data.js
+
       - name: Prepare static artifact
         run: |
+          rm -rf _site
           mkdir -p _site
           cp index.html 404.html _site/
           cp -R assets creation _site/
           touch _site/.nojekyll
+
+      - name: Verify static artifact
+        run: |
+          test -s _site/index.html
+          test -s _site/404.html
+          test -s _site/assets/main.js
+          test -s _site/assets/project-data.js
+          test -s _site/assets/publication-data.js
+          test -s _site/assets/media-data.js
+          test -s _site/creation/navitoon/index.html
+          grep -q "HRJP_PROJECTS" _site/assets/project-data.js
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
