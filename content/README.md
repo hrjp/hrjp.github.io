@@ -27,8 +27,8 @@
 - `creation/<slug>/index.html`
 - `404.html` の旧URLリダイレクト定義
 
-`creation/` 以下のHTMLは生成物なので、直接編集せずYAMLを編集してください。
+これらの生成物は `.gitignore` に入れているので、コミットしません。
+GitHub Actions が deploy 前に `npm run build` を実行し、公開用 artifact に含めます。
 
-このリポジトリは GitHub Pages でルート配信する想定のため、現状では `creation/` は
-ignore しないでコミットしてください。GitHub Actions などでビルドしてから配信する構成に
-変えた場合は、`creation/` を ignore しても問題ありません。
+ローカルで確認するときも、YAMLを編集したあとは `npm run build` を実行してください。
+`creation/` 以下のHTMLは直接編集せず、必ず `content/projects/*.yml` を編集します。

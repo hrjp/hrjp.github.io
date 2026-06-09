@@ -28,6 +28,11 @@ pnpm-debug.log*
 
 # Test/build artifacts
 _site/
+404.html
+assets/project-data.js
+assets/publication-data.js
+assets/media-data.js
+creation/
 coverage/
 .nyc_output/
 
