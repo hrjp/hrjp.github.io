@@ -76,7 +76,7 @@ const UI_TEXT = {
     project: {
       back: "← Creation",
       allProjects: "すべてのCreation",
-      highlights: "要点",
+      highlights: "ハイライト",
       resources: "関連リンク",
       noLinks: "公開リンクはまだありません。",
       media: "動画",
