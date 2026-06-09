@@ -1,0 +1,27 @@
+id: juzu-gripper-2023
+slug: juzu-gripper-2023
+title: 数珠状グリッパ 2023
+tag: Soft Gripper
+year: 2023
+image: /assets/projects/juzu-gripper-2023.jpg
+summary: 形状と固さを自在に制御できる数珠状のグリッパ。
+legacyPaths:
+  - /数珠状グリッパ-2023/
+highlights:
+  - 形状可変
+  - 硬さ可変
+  - 柔軟物体・把持対象に合わせた機構
+links: []
+videos:
+  - label: 動作動画
+    url: https://www.youtube.com/embed/W_ArBdygIRQ?rel=0
+en:
+  title: Juzu Type Gripper 2023
+  summary: A bead-like gripper that can actively control both shape and stiffness.
+  highlights:
+    - Variable shape
+    - Variable stiffness
+    - Mechanism designed to adapt to different grasping targets
+  videos:
+    - label: Motion video
+      url: https://www.youtube.com/embed/W_ArBdygIRQ?rel=0

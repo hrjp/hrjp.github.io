@@ -1,0 +1,31 @@
+id: sarukaninpo-2017
+slug: sarukaninpo-2017
+title: 高専ロボコン2017 さるかにんぽう
+tag: Robocon
+year: 2017
+image: /assets/projects/sarukaninpo-2017.jpg
+summary: 高専ロボコン2017で近畿地区大会技術賞、全国大会特別賞を受賞した風船を割るロボット。
+legacyPaths:
+  - /高専ロボコン2017-さるかにんぽう/
+highlights:
+  - 近畿地区大会技術賞
+  - 全国大会特別賞
+  - エキシビションで全国最速タイム
+links: []
+videos:
+  - label: テストラン
+    url: https://www.youtube.com/embed/CZy7zcKAWuw?rel=0
+  - label: PV
+    url: https://www.youtube.com/embed/S2W2XImrIyA?rel=0
+en:
+  title: Kosen Robocon 2017 Sarukaninpo
+  summary: A balloon-popping robot that won the technical award at the Kansai regional tournament and a special award at the national tournament.
+  highlights:
+    - Technical award at the Kansai regional tournament
+    - Special award at the national tournament
+    - Fastest national exhibition time
+  videos:
+    - label: Test run
+      url: https://www.youtube.com/embed/CZy7zcKAWuw?rel=0
+    - label: Promotion video
+      url: https://www.youtube.com/embed/S2W2XImrIyA?rel=0

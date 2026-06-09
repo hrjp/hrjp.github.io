@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shunya Hara</title>
+  <meta name="description" content="Shunya Hara portfolio">
+  <meta property="og:title" content="Shunya Hara">
+  <meta property="og:description" content="Shunya Hara portfolio">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="/assets/styles.css?v=media-interface-1">
+</head>
+<body>
+  <div class="scroll-meter" aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Shunya Hara home">
+      <span class="brand-mark">🐷</span>
+      <span>Shunya Hara</span>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#creation">Creation</a>
+      <a href="#biography">Biography</a>
+      <a href="#publication">Publication</a>
+      <a href="#media">Media</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Robotics / Autonomous Mobility / Manipulation</p>
+        <h1>Shunya Hara</h1>
+        <div class="hero-actions" aria-label="Primary links">
+          <a class="button primary" href="#creation">Creationを見る</a>
+          <a class="button ghost" href="#publication">Publication</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="creation" class="section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Creation</p>
+      </div>
+      <div class="project-grid" data-project-grid></div>
+    </section>
+
+    <section id="biography" class="section split-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Biography</p>
+      </div>
+      <div class="timeline-wrap">
+        <div class="timeline reveal">
+          <h3>Education</h3>
+          <ol>
+            <li>
+              <time>2015.4 - 2020.3</time>
+              <a href="https://sites.google.com/g.kobe-kosen.ac.jp/kobe-kosen-robotics/home">神戸市立工業高等専門学校 機械工学科</a>
+            </li>
+            <li>
+              <time>2020.4 - 2022.3</time>
+              <a href="https://sites.google.com/g.kobe-kosen.ac.jp/kobe-kosen-robotics/home">神戸市立工業高等専門学校専攻科 機械システム工学専攻</a>
+            </li>
+            <li>
+              <time>2022.4 - 2024.3</time>
+              <a href="http://www-ims.mech.eng.osaka-u.ac.jp/">大阪大学大学院工学研究科 機械工学専攻</a>
+            </li>
+          </ol>
+        </div>
+        <div class="timeline reveal">
+          <h3>Job & Internship</h3>
+          <ol>
+            <li>
+              <time>2018.9</time>
+              <a href="https://www.igs-group.com/">Integral Geometry Science</a>
+              <p>高分解能磁気映像化技術を用いた自動運転車の開発</p>
+            </li>
+            <li>
+              <time>2019.9 - 2020.1</time>
+              <a href="https://www.studioescape.jp/">Studio Escape</a>
+              <p>リアル脱出ゲームの電子回路設計制作</p>
+            </li>
+            <li>
+              <time>2022.2 - 2024.3</time>
+              <a href="https://tier4.jp/">TIER IV</a>
+              <p>自動運転ソフトウェアAutowareのシミュレータ開発</p>
+            </li>
+            <li>
+              <time>2024.4 -</time>
+              <a href="https://adtsd.jpn.panasonic.com/">Panasonic Advanced Technology Development Co.,Ltd.</a>
+              <p>自律移動ロボットの開発</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="publication" class="section publication-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Publication</p>
+        <h2>Research outputs</h2>
+      </div>
+
+      <div class="pub-controls reveal" role="tablist" aria-label="Publication filters">
+        <button class="filter is-active" type="button" data-filter="all">すべて</button>
+        <button class="filter" type="button" data-filter="peer">査読あり</button>
+        <button class="filter" type="button" data-filter="nonpeer">査読無し</button>
+        <button class="filter" type="button" data-filter="award">受賞</button>
+      </div>
+
+      <div class="publication-list" data-publication-list></div>
+    </section>
+
+    <section id="media" class="section media-section">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Media</p>
+        <h2>Media appearances</h2>
+      </div>
+      <div class="media-list" data-media-list></div>
+    </section>
+  </main>
+
+  <footer id="contact" class="footer">
+    <p>©2021-2026 Shunya Hara</p>
+    <a href="#top">Back to top</a>
+  </footer>
+
+  <script src="/assets/project-data.js?v=media-interface-1"></script>
+  <script src="/assets/publication-data.js?v=media-interface-1"></script>
+  <script src="/assets/media-data.js?v=media-interface-1"></script>
+  <script src="/assets/main.js?v=media-interface-1"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+id: autonomous-ai-challenge-2023
+slug: autonomous-ai-challenge-2023
+title: 自動運転AIチャレンジ2023
+tag: Simulation
+year: 2023
+image: /assets/projects/autonomous-ai-challenge-2023.jpg
+summary: シミュレータ上でレーシングカーを自動走行させ、タイムを競う競技に参加。
+legacyPaths:
+  - /自動運転aiチャレンジ2023/
+highlights:
+  - レーシングカーの自動走行
+  - シミュレータ競技
+  - 走行経路のオフライン最適化
+links:
+  - label: aichallenge2023-racing
+    url: https://github.com/hrjp/aichallenge2023-racing
+    meta: GitHub
+  - label: AIchallenge2023_racetrajectory_optimization
+    url: https://github.com/tamago117/AIchallenge2023_racetrajectory_optimization
+    meta: GitHub
+videos:
+  - label: 走行動画
+    url: https://www.youtube.com/embed/4FuERs53O_E?rel=0
+en:
+  title: Autonomous Driving AI Challenge 2023
+  summary: Participated in a simulator-based racing challenge where autonomous race cars compete for lap time.
+  highlights:
+    - Autonomous racing car control
+    - Simulator-based competition
+    - Offline optimization of racing trajectory
+  videos:
+    - label: Run video
+      url: https://www.youtube.com/embed/4FuERs53O_E?rel=0

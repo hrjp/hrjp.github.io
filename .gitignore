@@ -1,1 +1,47 @@
+# macOS
 .DS_Store
+
+# Typo/legacy ignore file
+.giignore
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+vendor/bundle/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tool caches
+.cache/
+.parcel-cache/
+.vite/
+.sass-cache/
+
+# Test/build artifacts
+_site/
+404.html
+assets/project-data.js
+assets/publication-data.js
+assets/media-data.js
+creation/
+coverage/
+.nyc_output/
+
+# Jekyll
+.jekyll-cache/
+.jekyll-metadata
+
+# Local editor state
+.idea/
+.vscode/
+*.swp
+*.swo

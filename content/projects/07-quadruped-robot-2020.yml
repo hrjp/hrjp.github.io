@@ -1,0 +1,26 @@
+id: quadruped-robot-2020
+slug: quadruped-robot-2020
+title: Quadruped robot 2020
+tag: Quadruped
+year: 2020
+image: /assets/projects/quadruped-robot-2020.jpg
+summary: 3Dプリンタと12個のサーボモータで構成されたシンプルな4脚歩行ロボット。
+legacyPaths:
+  - /quadruped-robot-2020/
+highlights:
+  - 4脚歩行ロボット
+  - 3Dプリント構成
+  - 12サーボモータ
+links:
+  - label: spoton_teensy
+    url: https://github.com/hrjp/spoton_teensy
+    meta: GitHub
+videos: []
+en:
+  title: Quadruped Robot 2020
+  summary: A simple quadruped robot built with 3D-printed parts and 12 servo motors.
+  highlights:
+    - Quadruped walking robot
+    - 3D-printed structure
+    - 12 servo motors
+  videos: []

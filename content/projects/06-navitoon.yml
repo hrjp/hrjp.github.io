@@ -1,0 +1,33 @@
+id: navitoon
+slug: navitoon
+title: Navit(oo)n (中之島ロボットチャレンジ2019-2023)
+tag: Open Source Robot
+year: 2019-2023
+image: /assets/projects/navitoon.jpg
+summary: 人や自転車が行き交う市街地を、ぶつからず自動で走行する自律移動ロボット。
+legacyPaths:
+  - /navitoon-中之島ロボットチャレンジ2019-2023/
+highlights:
+  - 中之島ロボットチャレンジ完走
+  - 市街地での自律走行
+  - オープンソースロボットプロジェクト
+links:
+  - label: naviton
+    url: https://github.com/KobeKosenRobotics/naviton
+    meta: GitHub
+  - label: Journal paper
+    url: https://www.fujipress.jp/jrm/rb/robot003500061540/
+    meta: Reference
+videos:
+  - label: 走行動画
+    url: https://www.youtube.com/embed/nqcDYy8ZOg0?rel=0
+en:
+  title: Navit(oo)n (Nakanoshima Robot Challenge 2019-2023)
+  summary: An autonomous mobile robot that navigates urban streets with pedestrians and bicycles without collisions.
+  highlights:
+    - Completed the Nakanoshima Robot Challenge
+    - Autonomous navigation in urban public space
+    - Open-source mobile robot project
+  videos:
+    - label: Run video
+      url: https://www.youtube.com/embed/nqcDYy8ZOg0?rel=0

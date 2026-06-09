@@ -1,0 +1,34 @@
+id: plat-tsukuba-challenge
+slug: plat-tsukuba-challenge
+title: plat (つくばチャレンジ2021-2023)
+tag: Field Robot
+year: 2021-2023
+image: /assets/projects/plat-tsukuba-challenge.jpg
+summary: つくばチャレンジ2023で完走した自律移動ロボット。
+legacyPaths:
+  - /plat-つくばチャレンジ2021-2023/
+highlights:
+  - 屋外自律移動
+  - つくばチャレンジ2023完走
+  - フィールド実証
+links:
+  - label: plat
+    url: https://github.com/tamago117/plat
+    meta: GitHub
+videos:
+  - label: 走行動画
+    url: https://www.youtube.com/embed/LhED7nGRJEg?rel=0
+  - label: デモ動画
+    url: https://www.youtube.com/embed/ahRZplaeSao?rel=0
+en:
+  title: plat (Tsukuba Challenge 2021-2023)
+  summary: An autonomous mobile robot that completed Tsukuba Challenge 2023.
+  highlights:
+    - Outdoor autonomous navigation
+    - Completed Tsukuba Challenge 2023
+    - Field testing in a real environment
+  videos:
+    - label: Run video
+      url: https://www.youtube.com/embed/LhED7nGRJEg?rel=0
+    - label: Demo video
+      url: https://www.youtube.com/embed/ahRZplaeSao?rel=0
