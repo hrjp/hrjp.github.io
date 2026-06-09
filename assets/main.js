@@ -62,7 +62,7 @@ const UI_TEXT = {
       nonpeer: "査読無し",
       award: "受賞"
     },
-    mediaHeading: "メディア掲載・出演",
+    mediaHeading: "メディア掲載",
     mediaEmpty: "テレビ・書籍などの掲載歴を追加できます。",
     mediaKinds: {
       tv: "テレビ",
