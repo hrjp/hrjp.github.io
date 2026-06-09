@@ -39,10 +39,9 @@ document.body.prepend(walkingRobot, scrollRobot);
 const UI_TEXT = {
   ja: {
     description: "Shunya Hara portfolio",
-    nav: ["Creation", "Biography", "Publication", "Contact"],
+    nav: ["Creation", "Biography", "Publication", "Media", "Contact"],
     viewCreation: "Creationを見る",
     publicationsButton: "Publicationを見る",
-    metricLabels: ["制作プロジェクト", "研究発表・受賞", "ポートフォリオ"],
     educationTitle: "学歴",
     jobTitle: "職歴・インターン",
     education: [
@@ -63,6 +62,16 @@ const UI_TEXT = {
       nonpeer: "査読無し",
       award: "受賞"
     },
+    mediaHeading: "メディア掲載・出演",
+    mediaEmpty: "テレビ・書籍などの掲載歴を追加できます。",
+    mediaKinds: {
+      tv: "テレビ",
+      book: "書籍",
+      web: "Web",
+      magazine: "雑誌",
+      event: "イベント",
+      other: "その他"
+    },
     backTop: "上へ戻る",
     project: {
       back: "← Creation",
@@ -78,10 +87,9 @@ const UI_TEXT = {
   },
   en: {
     description: "Shunya Hara portfolio",
-    nav: ["Creation", "Biography", "Publication", "Contact"],
+    nav: ["Creation", "Biography", "Publication", "Media", "Contact"],
     viewCreation: "View Creation",
     publicationsButton: "Publication",
-    metricLabels: ["Creation projects", "Research outputs", "Portfolio archive"],
     educationTitle: "Education",
     jobTitle: "Work & Internships",
     education: [
@@ -101,6 +109,16 @@ const UI_TEXT = {
       peer: "Peer reviewed",
       nonpeer: "Non-peer reviewed",
       award: "Awards"
+    },
+    mediaHeading: "Media appearances",
+    mediaEmpty: "TV, book, and other media appearances can be added here.",
+    mediaKinds: {
+      tv: "TV",
+      book: "Book",
+      web: "Web",
+      magazine: "Magazine",
+      event: "Event",
+      other: "Other"
     },
     backTop: "Back to top",
     project: {
@@ -131,6 +149,17 @@ function getProjectText(project, lang) {
     summary: localized.summary || project.summary,
     highlights: localized.highlights || project.highlights,
     videos: localized.videos || project.videos
+  };
+}
+
+function getMediaText(item, lang) {
+  const localized = lang === "en" ? item.en || {} : {};
+
+  return {
+    kind: localized.kind || UI_TEXT[lang].mediaKinds[item.kind] || item.kind,
+    title: localized.title || item.title,
+    outlet: localized.outlet || item.outlet,
+    description: localized.description || item.description
   };
 }
 
@@ -177,6 +206,41 @@ function renderPublicationList(lang) {
         <span class="pub-kind">${label}</span>
         <h3><a href="${escapeHtml(publication.url)}">${escapeHtml(publication.title)}</a></h3>
         ${citation ? `<p>${citation}</p>` : ""}
+      </article>
+    `;
+  }).join("");
+}
+
+function renderMediaList(lang) {
+  const list = document.querySelector("[data-media-list]");
+  const mediaItems = window.HRJP_MEDIA || [];
+  if (!list) return;
+
+  const text = UI_TEXT[lang];
+
+  if (!mediaItems.length) {
+    list.innerHTML = `
+      <article class="pub-item media-item media-empty reveal is-visible">
+        <span class="pub-kind">${escapeHtml(text.mediaKinds.other)}</span>
+        <h3>${escapeHtml(text.mediaEmpty)}</h3>
+      </article>
+    `;
+    return;
+  }
+
+  list.innerHTML = mediaItems.map((item) => {
+    const itemText = getMediaText(item, lang);
+    const title = item.url
+      ? `<a href="${escapeHtml(item.url)}">${escapeHtml(itemText.title)}</a>`
+      : escapeHtml(itemText.title);
+    const meta = [escapeHtml(item.date), escapeHtml(itemText.outlet)].filter(Boolean).join(" / ");
+
+    return `
+      <article class="pub-item media-item reveal is-visible" data-kind="${escapeHtml(item.kind)}">
+        <span class="pub-kind">${escapeHtml(itemText.kind)}</span>
+        <h3>${title}</h3>
+        ${meta ? `<p class="media-meta">${meta}</p>` : ""}
+        ${itemText.description ? `<p>${escapeHtml(itemText.description)}</p>` : ""}
       </article>
     `;
   }).join("");
@@ -241,13 +305,10 @@ function updateHomePage(lang) {
   setText(".hero-actions .primary", text.viewCreation);
   setText(".hero-actions .ghost", text.publicationsButton);
 
-  document.querySelectorAll(".intro-band .metric-label").forEach((label, index) => {
-    if (text.metricLabels[index]) label.textContent = text.metricLabels[index];
-  });
-
   setText(".timeline-wrap .timeline:nth-child(1) h3", text.educationTitle);
   setText(".timeline-wrap .timeline:nth-child(2) h3", text.jobTitle);
   setText("#publication .section-heading h2", text.publicationHeading);
+  setText("#media .section-heading h2", text.mediaHeading);
   setText(".footer a", text.backTop);
 
   document.querySelectorAll(".timeline-wrap .timeline:nth-child(1) li a").forEach((item, index) => {
@@ -269,6 +330,7 @@ function updateHomePage(lang) {
 
   renderProjectCards(lang);
   renderPublicationList(lang);
+  renderMediaList(lang);
 }
 
 function renderProjectPage(lang) {
@@ -448,7 +510,7 @@ document.querySelectorAll(".filter").forEach((button) => {
       item.classList.toggle("is-active", item === button);
     });
 
-    document.querySelectorAll(".pub-item").forEach((item) => {
+    document.querySelectorAll("[data-publication-list] .pub-item").forEach((item) => {
       const isVisible = filter === "all" || item.dataset.kind === filter;
       item.classList.toggle("is-hidden", !isVisible);
     });

@@ -12,10 +12,18 @@
 2. 著者名を太字にしたい場合は `highlight: true` を付ける
 3. `npm run build` を実行する
 
+メディア掲載・出演は `content/media.yml` を編集して管理します。
+
+1. `kind` は `tv`, `book`, `web`, `magazine`, `event`, `other` のいずれかを指定する
+2. テレビ・書籍などリンクがない掲載歴は `url` を省略できる
+3. 英語表示も整えたい場合は `en` に翻訳文を入力する
+4. `npm run build` を実行する
+
 ビルドすると以下が自動生成されます。
 
 - `assets/project-data.js`
 - `assets/publication-data.js`
+- `assets/media-data.js`
 - `creation/<slug>/index.html`
 - `404.html` の旧URLリダイレクト定義
 

@@ -4,11 +4,13 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const contentDir = path.join(root, "content", "projects");
 const publicationsFile = path.join(root, "content", "publications.yml");
+const mediaFile = path.join(root, "content", "media.yml");
 const creationDir = path.join(root, "creation");
 const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
+const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "publications-yaml-1";
+const assetVersion = "media-interface-1";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -179,6 +181,34 @@ function normalizePublication(publication, filename) {
   };
 }
 
+function normalizeMediaItem(item, filename) {
+  const required = ["id", "kind", "title"];
+  required.forEach((key) => {
+    if (!item[key]) throw new Error(`${filename}: missing "${key}"`);
+  });
+
+  const allowedKinds = ["tv", "book", "web", "magazine", "event", "other"];
+  if (!allowedKinds.includes(item.kind)) {
+    throw new Error(`${filename}: unknown media kind "${item.kind}"`);
+  }
+
+  return {
+    id: item.id,
+    kind: item.kind,
+    date: item.date || "",
+    title: item.title,
+    outlet: item.outlet || "",
+    url: item.url || "",
+    description: item.description || "",
+    en: {
+      kind: item.en?.kind || "",
+      title: item.en?.title || item.title,
+      outlet: item.en?.outlet || item.outlet || "",
+      description: item.en?.description || item.description || ""
+    }
+  };
+}
+
 function writeProjectData(projects) {
   const publicProjects = projects.map(({ legacyPaths, slug, ...project }) => project);
   const js = `window.HRJP_PROJECTS = ${JSON.stringify(publicProjects, null, 2)};\n`;
@@ -188,6 +218,11 @@ function writeProjectData(projects) {
 function writePublicationData(publications) {
   const js = `window.HRJP_PUBLICATIONS = ${JSON.stringify(publications, null, 2)};\n`;
   fs.writeFileSync(publicationDataFile, js);
+}
+
+function writeMediaData(mediaItems) {
+  const js = `window.HRJP_MEDIA = ${JSON.stringify(mediaItems, null, 2)};\n`;
+  fs.writeFileSync(mediaDataFile, js);
 }
 
 function writeProjectPages(projects) {
@@ -257,17 +292,23 @@ function main() {
     return normalizeProject(parseYaml(raw), file);
   });
   const publications = normalizePublicationList(parseYaml(fs.readFileSync(publicationsFile, "utf8")), "content/publications.yml");
+  const mediaItems = normalizeMediaList(parseYaml(fs.readFileSync(mediaFile, "utf8")), "content/media.yml");
 
   writeProjectData(projects);
   writePublicationData(publications);
+  writeMediaData(mediaItems);
   writeProjectPages(projects);
   writeNotFound(projects);
   syncAssetVersions();
-  console.log(`Built ${projects.length} projects and ${publications.length} publications.`);
+  console.log(`Built ${projects.length} projects, ${publications.length} publications, and ${mediaItems.length} media items.`);
 }
 
 function normalizePublicationList(value, filename) {
   return ensureArray(value).map((publication) => normalizePublication(publication, filename));
+}
+
+function normalizeMediaList(value, filename) {
+  return ensureArray(value).map((item) => normalizeMediaItem(item, filename));
 }
 
 main();
