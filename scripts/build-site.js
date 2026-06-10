@@ -10,7 +10,7 @@ const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "publication-counts-2";
+const assetVersion = "contact-icons-1";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;

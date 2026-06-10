@@ -324,7 +324,7 @@ function updateHomePage(lang) {
   setText(".timeline-wrap .timeline:nth-child(2) h3", text.jobTitle);
   setText("#publication .section-heading h2", text.publicationHeading);
   setText("#media .section-heading h2", text.mediaHeading);
-  setText(".footer a", text.backTop);
+  setText(".back-top", text.backTop);
 
   document.querySelectorAll(".timeline-wrap .timeline:nth-child(1) li a").forEach((item, index) => {
     if (text.education[index]) item.textContent = text.education[index];
