@@ -1,0 +1,30 @@
+id: q3dweb
+slug: q3dweb
+title: q3dweb 2026
+tag: Point Cloud Viewer
+year: 2026
+image: /assets/projects/q3dweb.png
+summary: ブラウザとVS Codeで動作する軽量な3D点群ビューア。PCD, PLY, LAS, LAZ, E57に対応。
+legacyPaths: []
+highlights:
+  - WebGL / Three.js ベースの点群ビューア
+  - ブラウザとVS Code拡張の両対応
+  - リアルタイムROS点群・GNSS表示に対応
+links:
+  - label: q3dweb
+    url: https://github.com/Panasonic-Advanced-Technology/q3dweb
+    meta: GitHub
+  - label: VSCode とブラウザで使える軽量点群ビューアを作ってみた
+    url: https://qiita.com/hrpad/items/588474a1b70d413104f8
+    meta: qiita
+  - label: q3dweb
+    url: https://Panasonic-Advanced-Technology.github.io/q3dweb/
+    meta: App
+videos: []
+en:
+  title: q3dweb
+  summary: A lightweight 3D point cloud viewer for the browser and VS Code, supporting PCD, PLY, LAS, LAZ, and E57.
+  highlights:
+    - WebGL / Three.js based point cloud viewer
+    - Runs in both browsers and VS Code extension
+    - Supports realtime ROS point clouds and GNSS visualization
