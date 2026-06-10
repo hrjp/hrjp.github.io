@@ -187,6 +187,21 @@ function getActivePublicationFilter() {
   return document.querySelector(".filter.is-active")?.dataset.filter || "all";
 }
 
+function getPublicationCounts() {
+  const counts = { all: 0, peer: 0, nonpeer: 0, award: 0 };
+  (window.HRJP_PUBLICATIONS || []).forEach((publication) => {
+    counts.all += 1;
+    if (publication.kind in counts) counts[publication.kind] += 1;
+  });
+  return counts;
+}
+
+function getPublicationFilterLabel(lang, filter, index) {
+  const baseLabel = UI_TEXT[lang].filters[index] || filter;
+  if (!["peer", "nonpeer", "award"].includes(filter)) return baseLabel;
+  return `${baseLabel} (${getPublicationCounts()[filter] || 0})`;
+}
+
 function renderPublicationList(lang) {
   const list = document.querySelector("[data-publication-list]");
   const publications = window.HRJP_PUBLICATIONS || [];
@@ -325,7 +340,7 @@ function updateHomePage(lang) {
   });
 
   document.querySelectorAll(".filter").forEach((button, index) => {
-    if (text.filters[index]) button.textContent = text.filters[index];
+    button.textContent = getPublicationFilterLabel(lang, button.dataset.filter, index);
   });
 
   renderProjectCards(lang);
