@@ -10,7 +10,7 @@ const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "contact-icons-1";
+const assetVersion = "creation-newest-first-1";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -294,7 +294,7 @@ function main() {
   const publications = normalizePublicationList(parseYaml(fs.readFileSync(publicationsFile, "utf8")), "content/publications.yml");
   const mediaItems = normalizeMediaList(parseYaml(fs.readFileSync(mediaFile, "utf8")), "content/media.yml");
 
-  writeProjectData(projects);
+  writeProjectData([...projects].reverse());
   writePublicationData(publications);
   writeMediaData(mediaItems);
   writeProjectPages(projects);
