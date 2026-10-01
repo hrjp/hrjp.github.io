@@ -303,7 +303,7 @@ function updateHomePage(lang) {
   setText(".footer .back-top", text.backTop);
   const en = lang === "en";
   const intro = document.querySelector("[data-hero-intro]");
-  if (intro) intro.textContent = en ? "Research and development in autonomous mobile robots and robotic manipulation." : "自律移動ロボットとマニピュレーションの研究・開発。";
+  if (intro) intro.textContent = en ? "I research and develop field robots." : "フィールドロボットの研究開発をしています。";
   setText('[data-section-title="creation"]', en ? "Creation" : "制作実績");
   setText('[data-section-title="biography"]', en ? "Biography" : "経歴");
   setText("#publication .section-heading h2", text.publicationHeading);
