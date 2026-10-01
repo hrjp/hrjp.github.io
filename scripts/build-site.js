@@ -10,7 +10,7 @@ const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "pages-monochrome-4";
+const assetVersion = "portfolio-copy-5";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -144,7 +144,6 @@ function normalizeProject(project, filename) {
     image: project.image,
     path: `/creation/${project.slug}/`,
     summary: project.summary,
-    highlights: ensureArray(project.highlights),
     links: ensureArray(project.links),
     videos: ensureArray(project.videos),
     legacyPaths: ensureArray(project.legacyPaths),
@@ -152,7 +151,6 @@ function normalizeProject(project, filename) {
       title: project.en?.title || project.title,
       tag: project.en?.tag || project.tag,
       summary: project.en?.summary || project.summary,
-      highlights: project.en?.highlights ? ensureArray(project.en.highlights) : ensureArray(project.highlights),
       videos: project.en?.videos ? ensureArray(project.en.videos) : ensureArray(project.videos)
     }
   };
