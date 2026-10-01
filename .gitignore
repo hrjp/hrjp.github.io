@@ -51,3 +51,6 @@ dist/
 .openai/
 .sites-runtime/
 *.tar.gz
+
+# Generated lossless image alternatives
+/assets/projects/*.lossless.webp

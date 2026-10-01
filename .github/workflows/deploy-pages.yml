@@ -29,6 +29,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install build dependencies
+        run: npm ci --no-audit --no-fund
+
       - name: Build generated content
         run: npm run build
 

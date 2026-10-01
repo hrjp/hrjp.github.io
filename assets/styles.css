@@ -11,3 +11,5 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.motion-ready .reveal{opacity:1}}
 
 .contact-links{display:flex;align-items:center;gap:24px}.contact-icon{display:inline-grid;place-items:center;width:36px;height:36px;color:var(--ink);transition:opacity .2s}.contact-icon:hover{opacity:.6}.contact-icon svg{width:20px;height:20px;fill:currentColor}
+
+.project-picture{display:contents}.project-picture>source{display:none}

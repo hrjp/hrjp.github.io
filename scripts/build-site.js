@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const sharp = require("sharp");
 
 const root = path.resolve(__dirname, "..");
 const contentDir = path.join(root, "content", "projects");
@@ -10,7 +11,7 @@ const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "project-button-6";
+const assetVersion = "lossless-images-7";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -209,17 +210,17 @@ function normalizeMediaItem(item, filename) {
 
 function writeProjectData(projects) {
   const publicProjects = projects.map(({ legacyPaths, slug, ...project }) => project);
-  const js = `window.HRJP_PROJECTS = ${JSON.stringify(publicProjects, null, 2)};\n`;
+  const js = `window.HRJP_PROJECTS = ${JSON.stringify(publicProjects)};\n`;
   fs.writeFileSync(dataFile, js);
 }
 
 function writePublicationData(publications) {
-  const js = `window.HRJP_PUBLICATIONS = ${JSON.stringify(publications, null, 2)};\n`;
+  const js = `window.HRJP_PUBLICATIONS = ${JSON.stringify(publications)};\n`;
   fs.writeFileSync(publicationDataFile, js);
 }
 
 function writeMediaData(mediaItems) {
-  const js = `window.HRJP_MEDIA = ${JSON.stringify(mediaItems, null, 2)};\n`;
+  const js = `window.HRJP_MEDIA = ${JSON.stringify(mediaItems)};\n`;
   fs.writeFileSync(mediaDataFile, js);
 }
 
@@ -284,7 +285,7 @@ function syncAssetVersions() {
   });
 }
 
-function main() {
+async function main() {
   const files = fs.readdirSync(contentDir).filter((file) => file.endsWith(".yml")).sort();
   const projects = files.map((file) => {
     const raw = fs.readFileSync(path.join(contentDir, file), "utf8");
@@ -293,6 +294,7 @@ function main() {
   const publications = normalizePublicationList(parseYaml(fs.readFileSync(publicationsFile, "utf8")), "content/publications.yml");
   const mediaItems = normalizeMediaList(parseYaml(fs.readFileSync(mediaFile, "utf8")), "content/media.yml");
 
+  await prepareProjectImages(projects);
   writeProjectData([...projects].reverse());
   writePublicationData(publications);
   writeMediaData(mediaItems);
@@ -320,4 +322,30 @@ function writeStaticOutput() {
   }
 }
 
-main();
+async function prepareProjectImages(projects) {
+  await Promise.all(projects.map(async (project) => {
+    const input = path.join(root, project.image.replace(/^\/+/, ""));
+    const metadata = await sharp(input).metadata();
+    if (metadata.format !== "png") return;
+
+    const encoded = await sharp(input).keepMetadata()
+      .webp({ lossless: true, exact: true, effort: 6 }).toBuffer();
+    if (encoded.length >= fs.statSync(input).size) return;
+
+    const outputMetadata = await sharp(encoded).metadata();
+    const [originalPixels, outputPixels] = await Promise.all([
+      sharp(input).keepMetadata().ensureAlpha().raw().toBuffer(),
+      sharp(encoded).keepMetadata().ensureAlpha().raw().toBuffer()
+    ]);
+    if (!originalPixels.equals(outputPixels) ||
+        !(metadata.icc || Buffer.alloc(0)).equals(outputMetadata.icc || Buffer.alloc(0)) ||
+        (metadata.orientation || 1) !== (outputMetadata.orientation || 1)) {
+      throw new Error(`Lossless verification failed: ${project.image}`);
+    }
+    project.webpImage = project.image.replace(/\.png$/i, ".lossless.webp");
+    fs.writeFileSync(path.join(root, project.webpImage.replace(/^\/+/, "")), encoded);
+    console.log(`Lossless image: ${project.image} ${fs.statSync(input).size} -> ${encoded.length} bytes`);
+  }));
+}
+
+main().catch((error) => { console.error(error); process.exitCode = 1; });
