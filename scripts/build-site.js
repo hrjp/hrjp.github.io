@@ -11,7 +11,7 @@ const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "lossless-images-7";
+const assetVersion = "publications-newest-8";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -158,7 +158,7 @@ function normalizeProject(project, filename) {
 }
 
 function normalizePublication(publication, filename) {
-  const required = ["id", "kind", "title", "url"];
+  const required = ["id", "kind", "year", "title", "url"];
   required.forEach((key) => {
     if (!publication[key]) throw new Error(`${filename}: missing "${key}"`);
   });
@@ -170,6 +170,7 @@ function normalizePublication(publication, filename) {
   return {
     id: publication.id,
     kind: publication.kind,
+    year: Number(publication.year),
     title: publication.title,
     url: publication.url,
     authors: ensureArray(publication.authors).map((author) => ({
@@ -296,7 +297,7 @@ async function main() {
 
   await prepareProjectImages(projects);
   writeProjectData([...projects].reverse());
-  writePublicationData(publications);
+  writePublicationData([...publications].sort((a, b) => b.year - a.year));
   writeMediaData(mediaItems);
   writeProjectPages(projects);
   writeNotFound(projects);
