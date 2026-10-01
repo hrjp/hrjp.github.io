@@ -115,6 +115,13 @@ function getProjectText(project, lang) {
   };
 }
 
+function renderProjectImage(project, alt, attributes = "") {
+  const image = `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(alt)}" ${attributes}>`;
+  return project.webpImage
+    ? `<picture class="project-picture"><source srcset="${escapeHtml(project.webpImage)}" type="image/webp">${image}</picture>`
+    : image;
+}
+
 function getMediaText(item, lang) {
   const localized = lang === "en" ? item.en || {} : {};
 
@@ -231,7 +238,7 @@ function renderProjectCards(lang) {
   grid.innerHTML = projects.map((project, index) => {
     const localized = getProjectText(project, lang);
     return `<a class="project-card reveal" data-id="${escapeHtml(project.id)}" href="${escapeHtml(project.path)}">
-      <div class="project-image"><img src="${escapeHtml(project.image)}" alt="${escapeHtml(localized.title)}" loading="lazy" decoding="async"><span class="project-view">${lang === "en" ? "View project" : "詳しく見る"}</span></div>
+      <div class="project-image">${renderProjectImage(project, localized.title, 'loading="lazy" decoding="async"')}<span class="project-view">${lang === "en" ? "View project" : "詳しく見る"}</span></div>
       <div class="project-card-top"><span>${escapeHtml(localized.tag)}</span><span>${escapeHtml(project.year)}</span></div>
       <h3>${escapeHtml(localized.title)}</h3><p class="project-card-summary">${escapeHtml(localized.summary)}</p>
     </a>`;
@@ -354,7 +361,7 @@ function renderProjectPage(lang) {
       const itemText = getProjectText(item, lang);
       return `
         <a class="mini-project" href="${item.path}">
-          <img src="${item.image}" alt="${itemText.title}">
+          ${renderProjectImage(item, itemText.title, 'loading="lazy"')}
           <span>${itemText.tag}</span>
           <strong>${itemText.title}</strong>
         </a>
@@ -370,7 +377,7 @@ function renderProjectPage(lang) {
         <p class="lead">${projectText.summary}</p>
       </div>
       <figure class="project-cover reveal is-visible">
-        <img src="${project.image}" alt="${projectText.title}">
+        ${renderProjectImage(project, projectText.title)}
       </figure>
     </div>
 

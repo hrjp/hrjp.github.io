@@ -2,5 +2,7 @@
   "scripts": {
     "build": "node scripts/build-site.js"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "sharp": "0.35.0"
+  }
 }
