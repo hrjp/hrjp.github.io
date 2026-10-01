@@ -45,3 +45,9 @@ coverage/
 .vscode/
 *.swp
 *.swo
+
+# Sites output and deployment configuration
+dist/
+.openai/
+.sites-runtime/
+*.tar.gz

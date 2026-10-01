@@ -2,46 +2,13 @@ const header = document.querySelector("[data-header]");
 const meter = document.querySelector(".scroll-meter");
 const navLinks = [...document.querySelectorAll(".nav a")];
 const LANG_KEY = "hrjp-language";
-const scrollRobot = document.createElement("div");
-const walkingRobot = document.createElement("div");
-
-walkingRobot.className = "walking-robot";
-walkingRobot.setAttribute("aria-hidden", "true");
-walkingRobot.innerHTML = `
-  <div class="walking-robot-shadow"></div>
-  <div class="walking-robot-head">
-    <span class="walking-robot-eye"></span>
-  </div>
-  <div class="walking-robot-torso">
-    <span class="walking-robot-core"></span>
-    <span class="walking-robot-arm walk-arm-front"></span>
-    <span class="walking-robot-arm walk-arm-back"></span>
-  </div>
-  <span class="walking-robot-leg walk-leg-front"></span>
-  <span class="walking-robot-leg walk-leg-back"></span>
-`;
-
-scrollRobot.className = "scroll-robot";
-scrollRobot.setAttribute("aria-hidden", "true");
-scrollRobot.innerHTML = `
-  <div class="scroll-robot-shadow"></div>
-  <div class="scroll-robot-body">
-    <span class="scroll-robot-sensor"></span>
-    <span class="scroll-robot-light"></span>
-    <span class="scroll-robot-arm arm-front"></span>
-    <span class="scroll-robot-arm arm-back"></span>
-  </div>
-  <span class="scroll-robot-wheel wheel-front"></span>
-  <span class="scroll-robot-wheel wheel-back"></span>
-`;
-document.body.prepend(walkingRobot, scrollRobot);
-
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const UI_TEXT = {
   ja: {
     description: "Shunya Hara portfolio",
     nav: ["Creation", "Biography", "Publication", "Media", "Contact"],
-    viewCreation: "Creationを見る",
-    publicationsButton: "Publicationを見る",
+    viewCreation: "制作実績を見る",
+    publicationsButton: "研究発表を見る",
     educationTitle: "学歴",
     jobTitle: "職歴・インターン",
     education: [
@@ -74,7 +41,7 @@ const UI_TEXT = {
     },
     backTop: "上へ戻る",
     project: {
-      back: "← Creation",
+      back: "Creation",
       allProjects: "すべてのCreation",
       highlights: "要点",
       resources: "関連リンク",
@@ -122,7 +89,7 @@ const UI_TEXT = {
     },
     backTop: "Back to top",
     project: {
-      back: "← Creation",
+      back: "Creation",
       allProjects: "All projects",
       highlights: "Highlights",
       resources: "Resources",
@@ -136,7 +103,8 @@ const UI_TEXT = {
 };
 
 function getStoredLanguage() {
-  const stored = localStorage.getItem(LANG_KEY);
+  let stored;
+  try { stored = localStorage.getItem(LANG_KEY); } catch {}
   return stored === "en" ? "en" : "ja";
 }
 
@@ -249,16 +217,14 @@ function renderMediaList(lang) {
 function renderProjectCards(lang) {
   const grid = document.querySelector("[data-project-grid]");
   const projects = window.HRJP_PROJECTS || [];
-  if (!grid || !projects.length) return;
-
-  grid.innerHTML = projects.map((project) => {
-    const projectText = getProjectText(project, lang);
-    return `
-      <a class="project-card reveal is-visible" href="${project.path}" aria-label="${projectText.title}">
-        <img src="${project.image}" alt="${projectText.title}">
-        <h3>${projectText.title}</h3>
-      </a>
-    `;
+  if (!grid) return;
+  grid.innerHTML = projects.map((project, index) => {
+    const localized = getProjectText(project, lang);
+    return `<a class="project-card reveal" data-id="${escapeHtml(project.id)}" href="${escapeHtml(project.path)}">
+      <div class="project-image"><img src="${escapeHtml(project.image)}" alt="${escapeHtml(localized.title)}" loading="lazy" decoding="async"><span class="project-view">${lang === "en" ? "View project" : "詳しく見る"}</span></div>
+      <div class="project-card-top"><span>${escapeHtml(localized.tag)}</span><span>${escapeHtml(project.year)}</span></div>
+      <h3>${escapeHtml(localized.title)}</h3><p class="project-card-summary">${escapeHtml(localized.summary)}</p>
+    </a>`;
   }).join("");
 }
 
@@ -275,7 +241,7 @@ function installLanguageToggle() {
 
   toggle.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", () => {
-      localStorage.setItem(LANG_KEY, button.dataset.langOption);
+      try { localStorage.setItem(LANG_KEY, button.dataset.langOption); } catch {}
       applyLanguage(button.dataset.langOption);
     });
   });
@@ -294,7 +260,7 @@ function updateLanguageToggle(lang) {
 function updateHomePage(lang) {
   const text = UI_TEXT[lang];
 
-  document.title = "Shunya Hara";
+  document.title = "Shunya Hara — Robotics & Creation";
   document.querySelector('meta[name="description"]')?.setAttribute("content", text.description);
   document.querySelector('meta[property="og:description"]')?.setAttribute("content", text.description);
 
@@ -307,9 +273,16 @@ function updateHomePage(lang) {
 
   setText(".timeline-wrap .timeline:nth-child(1) h3", text.educationTitle);
   setText(".timeline-wrap .timeline:nth-child(2) h3", text.jobTitle);
+
+
+  setText(".footer .back-top", text.backTop);
+  const en = lang === "en";
+  const intro = document.querySelector("[data-hero-intro]");
+  if (intro) intro.textContent = en ? "Research and development in autonomous mobile robots and robotic manipulation." : "自律移動ロボットとマニピュレーションの研究・開発。";
+  setText('[data-section-title="creation"]', en ? "Creation" : "制作実績");
+  setText('[data-section-title="biography"]', en ? "Biography" : "経歴");
   setText("#publication .section-heading h2", text.publicationHeading);
-  setText("#media .section-heading h2", text.mediaHeading);
-  setText(".footer a", text.backTop);
+  setText("#media .section-heading h2", en ? "Media" : "メディア掲載");
 
   document.querySelectorAll(".timeline-wrap .timeline:nth-child(1) li a").forEach((item, index) => {
     if (text.education[index]) item.textContent = text.education[index];
@@ -402,13 +375,13 @@ function renderProjectPage(lang) {
         </ul>
       </section>
 
-      <section class="detail-panel reveal is-visible">
+      <section class="detail-panel reveal is-visible" ${project.links.length ? "" : "hidden"}>
         <p class="eyebrow">${text.resources}</p>
         <div class="resource-grid">${linkMarkup}</div>
       </section>
     </div>
 
-    <section class="project-media">
+    <section class="project-media" ${projectText.videos.length ? "" : "hidden"}>
       <div class="section-heading reveal is-visible">
         <p class="eyebrow">${text.media}</p>
       </div>
@@ -433,6 +406,7 @@ function applyLanguage(lang) {
 
   document.documentElement.lang = safeLang;
   document.body.dataset.lang = safeLang;
+  document.querySelectorAll("[data-lang-option]").forEach(b => b.setAttribute("aria-label", b.dataset.langOption === "ja" ? "日本語" : "English"));
   updateLanguageToggle(safeLang);
 
   if (document.querySelector("[data-project-root]")) {
@@ -440,83 +414,67 @@ function applyLanguage(lang) {
   } else {
     updateHomePage(safeLang);
   }
+  observeReveals();
 }
 
+let ticking = false;
 function updateScrollState() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
-  const robotX = 112 - Math.min(progress, 1) * 142;
-  const robotY = Math.sin(progress * Math.PI * 8) * 4;
-  const walkingRobotX = 132 - Math.min(progress, 1) * 142;
-  const walkingRobotY = Math.sin(progress * Math.PI * 9 + 0.8) * 5;
-
-  if (meter) meter.style.width = `${Math.min(progress * 100, 100)}%`;
-  if (header) header.classList.toggle("is-scrolled", window.scrollY > 12);
-  if (scrollRobot) scrollRobot.style.transform = `translate3d(${robotX}vw, ${robotY}px, 0)`;
-  if (walkingRobot) walkingRobot.style.transform = `translate3d(${walkingRobotX}vw, ${walkingRobotY}px, 0)`;
+  const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+  if (meter) meter.style.width = `${progress * 100}%`;
+  if (header) header.classList.toggle("is-scrolled", window.scrollY > 100);
+  ticking = false;
 }
-
+const revealObserver = "IntersectionObserver" in window && !reducedMotion.matches
+  ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); revealObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px 40px 0px" }) : null;
+if (revealObserver) document.body.classList.add("motion-ready");
+function observeReveals() {
+  document.querySelectorAll(".reveal:not(.is-visible)").forEach(element => {
+    if (revealObserver) revealObserver.observe(element);
+    else element.classList.add("is-visible");
+  });
+}
 installLanguageToggle();
 applyLanguage(getStoredLanguage());
-
-const revealObserver = "IntersectionObserver" in window
-  ? new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.14 }
-    )
-  : null;
-
-document.querySelectorAll(".reveal").forEach((element) => {
-  if (revealObserver) {
-    revealObserver.observe(element);
-  } else {
-    element.classList.add("is-visible");
-  }
-});
-
 const sections = [...document.querySelectorAll("main section[id], footer[id]")];
-
 if ("IntersectionObserver" in window && sections.length) {
-  const sectionObserver = new IntersectionObserver(
-    (entries) => {
-      const active = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-      if (!active) return;
-
-      navLinks.forEach((link) => {
-        link.classList.toggle("is-active", link.hash === `#${active.target.id}`);
-      });
-    },
-    { rootMargin: "-30% 0px -55% 0px", threshold: [0.1, 0.4, 0.7] }
-  );
-
-  sections.forEach((section) => sectionObserver.observe(section));
+  const sectionObserver = new IntersectionObserver(entries => {
+    const active = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!active) return;
+    navLinks.forEach(link => {
+      const selected = link.hash === `#${active.target.id}`;
+      link.classList.toggle("is-active", selected);
+      if (selected) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current");
+    });
+  }, { rootMargin: "-15% 0px -55% 0px", threshold: [0, 0.1, 0.4] });
+  sections.forEach(section => sectionObserver.observe(section));
 }
-
-document.querySelectorAll(".filter").forEach((button) => {
+document.querySelectorAll(".filter").forEach(button => {
   button.addEventListener("click", () => {
-    const filter = button.dataset.filter;
-
-    document.querySelectorAll(".filter").forEach((item) => {
+    document.querySelectorAll(".filter").forEach(item => {
       item.classList.toggle("is-active", item === button);
+      item.setAttribute("aria-pressed", String(item === button));
     });
-
-    document.querySelectorAll("[data-publication-list] .pub-item").forEach((item) => {
-      const isVisible = filter === "all" || item.dataset.kind === filter;
-      item.classList.toggle("is-hidden", !isVisible);
-    });
+    renderPublicationList(document.documentElement.lang);
   });
 });
-
-window.addEventListener("scroll", updateScrollState, { passive: true });
-window.addEventListener("resize", updateScrollState);
+const menuButton = document.querySelector(".menu-toggle");
+function closeMenu() {
+  header?.classList.remove("menu-open");
+  menuButton?.setAttribute("aria-expanded", "false");
+  menuButton?.setAttribute("aria-label", document.documentElement.lang === "en" ? "Open menu" : "メニューを開く");
+}
+menuButton?.addEventListener("click", () => {
+  const open = header.classList.toggle("menu-open");
+  menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute("aria-label", document.documentElement.lang === "en" ? (open ? "Close menu" : "Open menu") : (open ? "メニューを閉じる" : "メニューを開く"));
+});
+navLinks.forEach(link => link.addEventListener("click", closeMenu));
+document.addEventListener("keydown", event => { if (event.key === "Escape") { closeMenu(); menuButton?.focus(); } });
+window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(updateScrollState); } }, { passive: true });
+window.addEventListener("resize", () => { updateScrollState(); if (window.innerWidth > 760) closeMenu(); });
 updateScrollState();
