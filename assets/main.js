@@ -42,7 +42,6 @@ const UI_TEXT = {
     backTop: "上へ戻る",
     project: {
       back: "Creation",
-      allProjects: "すべてのCreation",
       resources: "関連リンク",
       noLinks: "公開リンクはまだありません。",
       media: "動画",
@@ -89,7 +88,6 @@ const UI_TEXT = {
     backTop: "Back to top",
     project: {
       back: "Creation",
-      allProjects: "All projects",
       resources: "Resources",
       noLinks: "No public links yet.",
       media: "Media",
@@ -370,9 +368,6 @@ function renderProjectPage(lang) {
         <p class="eyebrow">${projectText.tag} / ${project.year}</p>
         <h1>${projectText.title}</h1>
         <p class="lead">${projectText.summary}</p>
-        <div class="hero-actions">
-          <a class="button primary" href="/#creation">${text.allProjects}</a>
-        </div>
       </div>
       <figure class="project-cover reveal is-visible">
         <img src="${project.image}" alt="${projectText.title}">
