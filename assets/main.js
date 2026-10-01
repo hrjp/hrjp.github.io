@@ -7,8 +7,8 @@ const UI_TEXT = {
   ja: {
     description: "Shunya Hara portfolio",
     nav: ["Creation", "Biography", "Publication", "Media", "Contact"],
-    viewCreation: "制作実績を見る",
-    publicationsButton: "研究発表を見る",
+    viewCreation: "ものづくり",
+    publicationsButton: "研究発表",
     educationTitle: "学歴",
     jobTitle: "職歴・インターン",
     education: [
@@ -43,7 +43,6 @@ const UI_TEXT = {
     project: {
       back: "Creation",
       allProjects: "すべてのCreation",
-      highlights: "ハイライト",
       resources: "関連リンク",
       noLinks: "公開リンクはまだありません。",
       media: "動画",
@@ -91,7 +90,6 @@ const UI_TEXT = {
     project: {
       back: "Creation",
       allProjects: "All projects",
-      highlights: "Highlights",
       resources: "Resources",
       noLinks: "No public links yet.",
       media: "Media",
@@ -115,7 +113,6 @@ function getProjectText(project, lang) {
     title: localized.title || project.title,
     tag: localized.tag || project.tag,
     summary: localized.summary || project.summary,
-    highlights: localized.highlights || project.highlights,
     videos: localized.videos || project.videos
   };
 }
@@ -382,15 +379,8 @@ function renderProjectPage(lang) {
       </figure>
     </div>
 
-    <div class="project-body">
+    <div class="project-body" ${project.links.length ? "" : "hidden"}>
       <section class="detail-panel reveal is-visible">
-        <p class="eyebrow">${text.highlights}</p>
-        <ul class="highlight-list">
-          ${projectText.highlights.map((item) => `<li>${item}</li>`).join("")}
-        </ul>
-      </section>
-
-      <section class="detail-panel reveal is-visible" ${project.links.length ? "" : "hidden"}>
         <p class="eyebrow">${text.resources}</p>
         <div class="resource-grid">${linkMarkup}</div>
       </section>
