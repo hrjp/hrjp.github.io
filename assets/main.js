@@ -172,9 +172,17 @@ function getPublicationFilterLabel(lang, filter, index) {
   return `${baseLabel} (${getPublicationCounts()[filter] || 0})`;
 }
 
+function getPublicationYear(publication) {
+  const year = Number(publication.year);
+  if (Number.isFinite(year) && year > 0) return year;
+  const source = `${publication.venue || ""} ${publication.id || ""} ${publication.title || ""}`;
+  return Number(source.match(/(?:19|20)\d{2}/)?.[0] || 0);
+}
+
 function renderPublicationList(lang) {
   const list = document.querySelector("[data-publication-list]");
-  const publications = window.HRJP_PUBLICATIONS || [];
+  const publications = [...(window.HRJP_PUBLICATIONS || [])]
+    .sort((a, b) => getPublicationYear(b) - getPublicationYear(a));
   if (!list) return;
 
   const text = UI_TEXT[lang];
