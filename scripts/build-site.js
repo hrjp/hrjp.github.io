@@ -10,7 +10,7 @@ const dataFile = path.join(root, "assets", "project-data.js");
 const publicationDataFile = path.join(root, "assets", "publication-data.js");
 const mediaDataFile = path.join(root, "assets", "media-data.js");
 const projectTemplateFile = path.join(root, "templates", "project-page.html");
-const assetVersion = "q3dweb-creation-1";
+const assetVersion = "pages-monochrome-4";
 
 function countIndent(line) {
   return line.match(/^ */)[0].length;
@@ -257,6 +257,7 @@ function writeNotFound(projects) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found | Shunya Hara</title>
   <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Cpath d='M18 17v30M46 17v30M18 32h28' stroke='%23ffffff' stroke-width='8'/%3E%3C/svg%3E">
   <script>
     const routes = ${JSON.stringify(routes, null, 4)};
     const target = routes[decodeURI(location.pathname)];
@@ -265,7 +266,7 @@ function writeNotFound(projects) {
   <link rel="stylesheet" href="/assets/styles.css?v=${assetVersion}">
 </head>
 <body>
-  <main class="section">
+  <main class="section not-found">
     <p class="eyebrow">Not Found</p>
     <h1>404</h1>
     <p class="lead">ページが見つかりませんでした。</p>
@@ -300,6 +301,7 @@ function main() {
   writeProjectPages(projects);
   writeNotFound(projects);
   syncAssetVersions();
+  writeStaticOutput();
   console.log(`Built ${projects.length} projects, ${publications.length} publications, and ${mediaItems.length} media items.`);
 }
 
@@ -309,6 +311,15 @@ function normalizePublicationList(value, filename) {
 
 function normalizeMediaList(value, filename) {
   return ensureArray(value).map((item) => normalizeMediaItem(item, filename));
+}
+
+
+function writeStaticOutput() {
+  const out = path.join(root, "dist");
+  fs.mkdirSync(out, { recursive: true });
+  for (const entry of ["assets", "creation", "index.html", "404.html"]) {
+    fs.cpSync(path.join(root, entry), path.join(out, entry), { recursive: true });
+  }
 }
 
 main();
