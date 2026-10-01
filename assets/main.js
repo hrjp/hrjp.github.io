@@ -304,7 +304,7 @@ function updateHomePage(lang) {
   const en = lang === "en";
   const intro = document.querySelector("[data-hero-intro]");
   if (intro) intro.textContent = en ? "I research and develop field robots." : "フィールドロボットの研究開発をしています。";
-  setText('[data-section-title="creation"]', en ? "Creation" : "制作実績");
+  setText('[data-section-title="creation"]', en ? "Creation" : "ものづくり");
   setText('[data-section-title="biography"]', en ? "Biography" : "経歴");
   setText("#publication .section-heading h2", text.publicationHeading);
   setText("#media .section-heading h2", text.mediaHeading);
