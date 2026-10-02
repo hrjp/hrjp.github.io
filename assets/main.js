@@ -39,7 +39,7 @@ const UI_TEXT = {
       event: "イベント",
       other: "その他"
     },
-    backTop: "上へ戻る",
+    backTop: "Back to top",
     project: {
       back: "Creation",
       resources: "関連リンク",
